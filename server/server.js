@@ -6,7 +6,7 @@ const server = express()
 
 // Routes
 server.get('/', (req, res) => {
-    res.send('Hi')
+    res.send('Hi there')
 })
 
 module.exports = server
