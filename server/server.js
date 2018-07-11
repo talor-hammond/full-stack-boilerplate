@@ -1,8 +1,11 @@
 const express = require('express')
 const server = express()
 
-// Middleware
+// Routing
+const fruits = require('./routes/fruits')
 
+// Middleware
+server.use('/api/v1', fruits)
 
 // Routes
 server.get('/', (req, res) => {
