@@ -1,0 +1,8 @@
+{
+  "name": "full-stack-boilerplate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/talor-hammond/full-stack-boilerplate.git",
+  "author": "anton <anton.arus@gmail.com>",
+  "license": "MIT"
+}
