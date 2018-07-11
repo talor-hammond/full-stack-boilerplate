@@ -1,0 +1,16 @@
+{
+  "name": "full-stack-boilerplate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/talor-hammond/full-stack-boilerplate.git",
+  "author": "anton <anton.arus@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.18.0"
+  }
+}
