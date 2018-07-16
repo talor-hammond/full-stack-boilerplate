@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 
+// Connection to redux state:
 import { connect } from 'react-redux'
+
+// Actions / api / thunk:
+import { getFruits } from '../api/fruits'
 
 class Fruits extends Component {
     componentDidMount() {
+        this.props.dispatch(getFruits())
         console.log('I should grab some fruits now?')
     }
 
