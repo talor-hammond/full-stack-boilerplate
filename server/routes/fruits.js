@@ -4,14 +4,14 @@ const router = express.Router()
 // Database / serving to our api:
 const fruitsDb = require('../db/fruits')
 
-//
-// router.use(express.json())
-
 // Routes
 router.get('/', (req, res) => {
     fruitsDb.getFruits()
         .then(fruits => {
             res.json(fruits)
+        })
+        .catch(err => {
+            if (err) throw err
         })
 })
 
@@ -20,7 +20,10 @@ router.post('/', (req, res) => {
 
     fruitsDb.addFruit(fruit)
         .then(() => {
-            res.sendStatus(200) // this is necessary; the connection must be closed
+            res.sendStatus(200)
+        })
+        .catch(err => {
+            if (err) throw err
         })
 })
 
