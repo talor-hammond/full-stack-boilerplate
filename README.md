@@ -1,2 +1,2 @@
 # full-stack-boilerplate
-full-stack boilerplate from scratch; client / server / other stuff
+full-stack boilerplate from scratch -- react, redux, knex, superagent
