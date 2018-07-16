@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server",
+    "dev": "nodemon server && webpack --watch",
     "knex": "knex"
   },
   "dependencies": {
