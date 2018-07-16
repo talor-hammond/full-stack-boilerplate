@@ -7,10 +7,23 @@
   "license": "MIT",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server && webpack --watch",
+    "dev": "nodemon server & webpack --watch",
+    "webpack": "webpack",
     "knex": "knex"
   },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react",
+      "stage-3"
+    ]
+  },
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
     "express": "^4.16.3",
     "knex": "^0.15.0",
     "nodemon": "^1.18.0",
@@ -21,9 +34,6 @@
     "redux-thunk": "^2.3.0",
     "sqlite3": "^4.0.1",
     "superagent": "^3.8.3",
-    "webpack": "^4.16.0"
-  },
-  "devDependencies": {
-    "webpack-cli": "^3.0.8"
+    "webpack": "^2.3.3"
   }
 }
