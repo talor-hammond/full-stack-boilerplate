@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import Fruits from './Fruits'
+
 class App extends Component {
 
     constructor(props) {
@@ -7,7 +9,9 @@ class App extends Component {
     }
 
     render() {
-        return <h1>Hi</h1>
+        return (
+            <Fruits />
+        )
     }
 
 }
