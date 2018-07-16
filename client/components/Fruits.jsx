@@ -1,26 +1,38 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
 
-const Fruits = (props) => {
+class Fruits extends Component {
+    componentDidMount() {
+        console.log('I should grab some fruits now?')
+    }
 
-    console.log(props)
+    render() {
+        // Pulling fruits from props
+        const { fruits } = this.props
+        console.log(fruits)
 
-    return (
-        <React.Fragment>
-            <h1>Hi</h1>
-            {
-                props.fruits.map(fruit => {
-                    <h1>{fruit.name}</h1>
-                })
-            }
-        </React.Fragment>
-    )
-
+        return (
+            <React.Fragment>
+                <h1>Hi</h1>
+                {
+                    fruits.map(fruit => {
+                        <h1>{fruit.name}</h1>
+                    })
+                }
+            </React.Fragment>
+        )
+    }
 }
 
-const mapStateToProps = ({fruits}) => {
-    return { fruits }
-}
+const mapStateToProps = ({fruits}) => ({
+    fruits
+})
+
+// function mapStateToProps(state) {
+//     return {
+//         rats: state.rats
+//     }
+// }
 
 export default connect(mapStateToProps)(Fruits)

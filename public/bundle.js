@@ -2157,6 +2157,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
@@ -2165,33 +2167,68 @@ var _reactRedux = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Fruits = function Fruits(props) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    console.log(props);
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-    return _react2.default.createElement(
-        _react2.default.Fragment,
-        null,
-        _react2.default.createElement(
-            'h1',
-            null,
-            'Hi'
-        ),
-        props.fruits.map(function (fruit) {
-            _react2.default.createElement(
-                'h1',
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Fruits = function (_Component) {
+    _inherits(Fruits, _Component);
+
+    function Fruits() {
+        _classCallCheck(this, Fruits);
+
+        return _possibleConstructorReturn(this, (Fruits.__proto__ || Object.getPrototypeOf(Fruits)).apply(this, arguments));
+    }
+
+    _createClass(Fruits, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            console.log('I should grab some fruits now?');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            // Pulling fruits from props
+            var fruits = this.props.fruits;
+
+            console.log(fruits);
+
+            return _react2.default.createElement(
+                _react2.default.Fragment,
                 null,
-                fruit.name
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    'Hi'
+                ),
+                fruits.map(function (fruit) {
+                    _react2.default.createElement(
+                        'h1',
+                        null,
+                        fruit.name
+                    );
+                })
             );
-        })
-    );
-};
+        }
+    }]);
+
+    return Fruits;
+}(_react.Component);
 
 var mapStateToProps = function mapStateToProps(_ref) {
     var fruits = _ref.fruits;
-
-    return { fruits: fruits };
+    return {
+        fruits: fruits
+    };
 };
+
+// function mapStateToProps(state) {
+//     return {
+//         rats: state.rats
+//     }
+// }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Fruits);
 
