@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
+// Components:
 import Fruits from './Fruits'
+import FruitForm from './FruitForm'
 
 class App extends Component {
 
@@ -10,7 +12,10 @@ class App extends Component {
 
     render() {
         return (
-            <Fruits />
+            <React.Fragment>
+                <Fruits />
+                <FruitForm />
+            </React.Fragment>
         )
     }
 

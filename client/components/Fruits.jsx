@@ -4,25 +4,27 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 // Actions / api / thunk:
-import { getFruits } from '../api/fruits'
+import { receiveFruits } from '../api/fruits'
 
 class Fruits extends Component {
+    constructor(props) {
+        super(props)
+    }
+
     componentDidMount() {
-        this.props.dispatch(getFruits())
-        console.log('I should grab some fruits now?')
+        this.props.dispatch(receiveFruits())
     }
 
     render() {
         // Pulling fruits from props
         const { fruits } = this.props
-        console.log(fruits)
 
         return (
             <React.Fragment>
                 <h1>Hi</h1>
                 {
-                    fruits.map(fruit => {
-                        <h1>{fruit.name}</h1>
+                    fruits.map((fruit, i) => {
+                        return <h1 key={i}>{fruit.name}</h1>
                     })
                 }
             </React.Fragment>
@@ -36,7 +38,7 @@ const mapStateToProps = ({fruits}) => ({
 
 // function mapStateToProps(state) {
 //     return {
-//         rats: state.rats
+//         fruits: state.fruits
 //     }
 // }
 

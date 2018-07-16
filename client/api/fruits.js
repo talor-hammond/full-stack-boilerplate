@@ -1,11 +1,28 @@
 import request from 'superagent'
 
-export function getFruits() {
+const fruitUrl = '/api/v1/fruits'
+
+// Synchronous actions:
+import { getFruits, addFruit } from '../actions/fruits'
+
+export function receiveFruits() {
     return (dispatch) => {
             request
-                .get('/api/v1/fruits')
+                .get(fruitUrl)
                 .then(res => {
-                    console.log(res.body)
+                    const fruits = res.body
+                    dispatch(getFruits(fruits))
                 })
+    }
+}
+
+export function insertFruit(fruit) {
+    return (dispatch) => {
+        request
+            .post(fruitUrl)
+            .send(fruit)
+            .then(() => {
+                dispatch(addFruit(fruit))
+            })
     }
 }

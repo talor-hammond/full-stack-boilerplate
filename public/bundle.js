@@ -2070,6 +2070,10 @@ var _Fruits = __webpack_require__(29);
 
 var _Fruits2 = _interopRequireDefault(_Fruits);
 
+var _FruitForm = __webpack_require__(74);
+
+var _FruitForm2 = _interopRequireDefault(_FruitForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2077,6 +2081,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Components:
+
 
 var App = function (_Component) {
     _inherits(App, _Component);
@@ -2090,7 +2097,12 @@ var App = function (_Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_Fruits2.default, null);
+            return _react2.default.createElement(
+                _react2.default.Fragment,
+                null,
+                _react2.default.createElement(_Fruits2.default, null),
+                _react2.default.createElement(_FruitForm2.default, null)
+            );
         }
     }]);
 
@@ -2205,18 +2217,33 @@ thunk.withExtraArgument = createThunkMiddleware;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getFruits = getFruits;
+exports.receiveFruits = receiveFruits;
+exports.insertFruit = insertFruit;
 
 var _superagent = __webpack_require__(66);
 
 var _superagent2 = _interopRequireDefault(_superagent);
 
+var _fruits = __webpack_require__(73);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function getFruits() {
+var fruitUrl = '/api/v1/fruits';
+
+// Synchronous actions:
+function receiveFruits() {
     return function (dispatch) {
-        _superagent2.default.get('/api/v1/fruits').then(function (res) {
-            console.log(res.body);
+        _superagent2.default.get(fruitUrl).then(function (res) {
+            var fruits = res.body;
+            dispatch((0, _fruits.getFruits)(fruits));
+        });
+    };
+}
+
+function insertFruit(fruit) {
+    return function (dispatch) {
+        _superagent2.default.post(fruitUrl).send(fruit).then(function () {
+            dispatch((0, _fruits.addFruit)(fruit));
         });
     };
 }
@@ -2259,17 +2286,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Fruits = function (_Component) {
     _inherits(Fruits, _Component);
 
-    function Fruits() {
+    function Fruits(props) {
         _classCallCheck(this, Fruits);
 
-        return _possibleConstructorReturn(this, (Fruits.__proto__ || Object.getPrototypeOf(Fruits)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (Fruits.__proto__ || Object.getPrototypeOf(Fruits)).call(this, props));
     }
 
     _createClass(Fruits, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.props.dispatch((0, _fruits.getFruits)());
-            console.log('I should grab some fruits now?');
+            this.props.dispatch((0, _fruits.receiveFruits)());
         }
     }, {
         key: 'render',
@@ -2277,7 +2303,6 @@ var Fruits = function (_Component) {
             // Pulling fruits from props
             var fruits = this.props.fruits;
 
-            console.log(fruits);
 
             return _react2.default.createElement(
                 _react2.default.Fragment,
@@ -2287,10 +2312,10 @@ var Fruits = function (_Component) {
                     null,
                     'Hi'
                 ),
-                fruits.map(function (fruit) {
-                    _react2.default.createElement(
+                fruits.map(function (fruit, i) {
+                    return _react2.default.createElement(
                         'h1',
-                        null,
+                        { key: i },
                         fruit.name
                     );
                 })
@@ -2310,7 +2335,7 @@ var mapStateToProps = function mapStateToProps(_ref) {
 
 // function mapStateToProps(state) {
 //     return {
-//         rats: state.rats
+//         fruits: state.fruits
 //     }
 // }
 
@@ -2372,12 +2397,19 @@ exports.default = function () {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var action = arguments[1];
 
-
     switch (action.type) {
+        case _fruits.RECEIVE_FRUITS:
+            return action.fruits;
+        case _fruits.ADD_FRUIT:
+            return [].concat(_toConsumableArray(state), [action.fruit]);
         default:
             return state;
     }
 };
+
+var _fruits = __webpack_require__(73);
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } // Strings:
 
 /***/ }),
 /* 32 */
@@ -25565,6 +25597,145 @@ module.exports = function(originalModule) {
 	return module;
 };
 
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getFruits = getFruits;
+exports.addFruit = addFruit;
+// Strings:
+var RECEIVE_FRUITS = exports.RECEIVE_FRUITS = 'RECEIVE_FRUITS';
+var ADD_FRUIT = exports.ADD_FRUIT = 'ADD_FRUIT';
+
+function getFruits(fruits) {
+    return {
+        type: RECEIVE_FRUITS,
+        fruits: fruits
+    };
+}
+
+function addFruit(fruit) {
+    return {
+        type: ADD_FRUIT,
+        fruit: fruit
+    };
+}
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(10);
+
+var _fruits = __webpack_require__(28);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Connection to redux state:
+
+
+// Thunk:
+
+
+var FruitForm = function (_Component) {
+    _inherits(FruitForm, _Component);
+
+    function FruitForm(props) {
+        _classCallCheck(this, FruitForm);
+
+        var _this = _possibleConstructorReturn(this, (FruitForm.__proto__ || Object.getPrototypeOf(FruitForm)).call(this, props));
+
+        _this.state = {
+            name: '',
+            rating: 0
+        };
+
+        _this.updateState = _this.updateState.bind(_this);
+        _this.submit = _this.submit.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(FruitForm, [{
+        key: 'updateState',
+        value: function updateState(e) {
+            e.target.name == 'rating' ? this.setState(_defineProperty({}, e.target.name, Number(e.target.value))) : this.setState(_defineProperty({}, e.target.name, e.target.value));
+        }
+    }, {
+        key: 'submit',
+        value: function submit(e) {
+            e.preventDefault();
+            var fruit = this.state;
+
+            this.props.dispatch((0, _fruits.insertFruit)(fruit));
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'form',
+                null,
+                _react2.default.createElement(
+                    'label',
+                    null,
+                    'Name of Fruit:'
+                ),
+                _react2.default.createElement('input', { type: 'text', name: 'name', onChange: function onChange(e) {
+                        return _this2.updateState(e);
+                    }, className: 'input' }),
+                _react2.default.createElement(
+                    'label',
+                    null,
+                    'Rating'
+                ),
+                _react2.default.createElement('input', { type: 'text', name: 'rating', onChange: function onChange(e) {
+                        return _this2.updateState(e);
+                    }, className: 'input' }),
+                _react2.default.createElement(
+                    'button',
+                    { className: 'button', onClick: function onClick(e) {
+                            return _this2.submit(e);
+                        } },
+                    'Submit'
+                )
+            );
+        }
+    }]);
+
+    return FruitForm;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)()(FruitForm);
 
 /***/ })
 /******/ ]);
