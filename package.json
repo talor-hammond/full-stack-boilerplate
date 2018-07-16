@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/talor-hammond/full-stack-boilerplate.git",
-  "author": "anton <anton.arus@gmail.com>",
+  "author": "tay <talorjhammond@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "node server",
@@ -15,6 +15,9 @@
     "knex": "^0.15.0",
     "nodemon": "^1.18.0",
     "react": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
     "sqlite3": "^4.0.1",
     "superagent": "^3.8.3",
     "webpack": "^4.16.0"
