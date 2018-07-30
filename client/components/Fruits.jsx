@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 // Actions / api / thunk:
-import { receiveFruits } from '../api/fruits'
+import { getFruitsRequest } from '../actions/fruits'
 
 class Fruits extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ class Fruits extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(receiveFruits())
+        this.props.dispatch(getFruitsRequest())
     }
 
     render() {

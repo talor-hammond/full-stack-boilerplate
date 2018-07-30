@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 // Thunk:
-import { insertFruit } from '../api/fruits'
+import { addFruitRequest } from '../actions/fruits'
 
 class FruitForm extends Component {
 
@@ -29,7 +29,7 @@ class FruitForm extends Component {
         e.preventDefault()
         const fruit = this.state
     
-        this.props.dispatch(insertFruit(fruit))
+        this.props.dispatch(addFruitRequest(fruit))
     }
 
     render() {
